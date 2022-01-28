@@ -18,7 +18,7 @@ for i in range(1, 50):
     roll = np.random.randint(1, 7, size=n)
     rolleddice += roll
 
-
+w = round()
 
 
 plt.hist(rolleddice) 
