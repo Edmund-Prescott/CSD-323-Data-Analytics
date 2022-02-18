@@ -17,7 +17,7 @@ res = stats.kstest(dat, stats.uniform(loc=min(dat), scale=max(dat)).cdf)
 print(res) 
 
 # % Chance that a given number will be less that 75 
-print(stats.uniform(loc=min(dat), scale=max(dat)).cdf(75))
+print(stats.uniform(min(dat), max(dat)).cdf(75))
 
 # % Chance that a given number will be 43
 print(stats.uniform(loc=min(dat), scale=max(dat)).pdf(43))
