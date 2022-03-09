@@ -6,49 +6,61 @@ from scipy import stats
 import statsmodels.api as sm
 import pyodbc
 
-server = 'ludsampledb.database.windows.net'
-database = 'SampleDB'
-username = 'sampleadmin'
-password = 'bC5B+=fd'   
-driver= '{SQL Server}'
+
+
+
+#server = 'ludsampledb.database.windows.net'
+#database = 'SampleDB'
+#username = 'sampleadmin'
+#password = 'bC5B+=fd'   
+#driver= '{SQL Server}'
 
 # get a look at available tables => "SELECT * FROM information_schema.tables"
 # get a look at the table I want => "SELECT * FROM dbo.Orders"
-query = "SELECT ROUND(SUM(Sales),2) FROM dbo.Orders GROUP BY YEAR(Order_Date), MONTH(Order_Date) ORDER BY YEAR(Order_Date), MONTH(Order_Date)"
+#query = "SELECT ROUND(SUM(Sales),2) FROM dbo.Orders GROUP BY YEAR(Order_Date), MONTH(Order_Date) ORDER BY YEAR(Order_Date), MONTH(Order_Date)"
 
-sales = []
+#sales = []
 
-with pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
-    data = pd.read_sql(query,conn)
+#with pyodbc.connect('DRIVER='+driver+';SERVER='+server+';PORT=1433;DATABASE='+database+';UID='+username+';PWD='+ password) as conn:
+#    data = pd.read_sql(query,conn)
 
-sales = np.array(data)
-sales = sales.flatten()
-sales = list(sales)
+#sales = np.array(data)
+#sales = sales.flatten()
+#sales = list(sales)
 
-print(sales[0:10])
-y = np.array(sales)
+#print(sales[0:10])
+#y = np.array(sales)
 
-maxshift = 3
-size = y.size
- 
-t = range(0,size)[maxshift:size]
-yt = y[maxshift:size]
-yt1 = y[maxshift-1:size-1]
-yt2 = y[maxshift-2:size-2]
-yt3 = y[maxshift-3:size-3]
- 
-data = pd.DataFrame(list(zip(t,yt, yt1, yt2, yt3)), columns = ['t','y', 'yt1', 'yt2', 'yt3'])
- 
-Y = data["y"]
-X = data[['yt3','yt2','yt1','t']]
- 
-X = sm.add_constant(X)
- 
-model = sm.OLS(Y, X)
-result = model.fit()
+#maxshift = 3
+#size = y.size
+
+#t = range(0,size)[maxshift:size]
+#yt = y[maxshift:size]
+#yt1 = y[maxshift-1:size-1]
+#yt2 = y[maxshift-2:size-2]
+#yt3 = y[maxshift-3:size-3]
+
+#data = pd.DataFrame(list(zip(t, yt, yt1, yt2, yt3)), columns = ['t', 'y', 'yt1', 'yt2', 'yt3'])
+
+#Y = data["y"]
+
+#X = data[['yt1','t' ]]
+
+#model = sm.OLS(Y, X)
+#result = model.fit()
+
+#print(round(result.predict([list(y)[-1], t[-1]+1])[0], 2))
+
+#Y = data["y"]
+
+#X = data[['yt2','yt1','t' ]]
+
+#model = sm.OLS(Y, X)
+#result = model.fit()
 
 
-print(result.predict([1,   list(y)[-1], list(y)[-2], list(y)[-3], t[-1]+1   ]))
+#print(round(result.predict([list(y)[-1],list(y)[-1], t[-1]+1])[0], 2))
+#print(round(result.predict([list(y)[-1], t[-3]+3])[0], 2))
 
 
 
