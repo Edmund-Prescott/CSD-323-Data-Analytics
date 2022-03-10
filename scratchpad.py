@@ -7,7 +7,77 @@ import statsmodels.api as sm
 import pyodbc
 
 
+zero =  [ 1,1,1,
+          1,0,1,
+          1,0,1,
+          1,0,1,
+          1,1,1]
 
+one =   [ 0,0,1,
+          0,0,1,
+          0,0,1,
+          0,0,1,
+          0,0,1]
+
+two =   [ 1,1,1,
+          0,0,1,
+          1,1,1,
+          1,0,0,
+          1,1,1]
+
+three = [ 1,1,1,
+          0,0,1,
+          0,1,1,
+          0,0,1,
+          1,1,1]
+
+four =  [ 1,0,1,
+          1,0,1,
+          1,1,1,
+          0,0,1,
+          0,0,1]
+
+five =  [ 1,1,1,
+          1,0,0,
+          1,1,1,
+          0,0,1,
+          1,1,1]
+
+six =   [ 1,1,1,
+          1,0,0,
+          1,1,1,
+          1,0,1,
+          1,1,1]
+
+seven = [ 1,1,1,
+          0,0,1,
+          0,0,1,
+          0,0,1,
+          0,0,1]
+
+eight = [ 1,1,1,
+          1,0,1,
+          1,1,1,
+          1,0,1,
+          1,1,1]
+
+nine =  [ 1,1,1,
+          1,0,1,
+          1,1,1,
+          0,0,1,
+          1,1,1]
+
+cols = list(['m00','m01', 'm02', 'm10', 'm11', 'm12', 'm20', 'm21', 'm22', 'm30','m31','m32','m40','m41','m42'])
+data = pd.DataFrame([zero,one, two, three, four, five, six, seven, eight, nine], columns = cols)
+
+x = data[['m00','m01','m10','m12','m21','m40','m41']]
+
+y = [0,1,2,3,4,5,6,7,8,9]
+
+model = sm.OLS(y, x)
+result = model.fit()
+
+print(result.summary())
 
 #server = 'ludsampledb.database.windows.net'
 #database = 'SampleDB'
